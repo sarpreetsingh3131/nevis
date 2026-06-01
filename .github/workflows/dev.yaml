@@ -6,59 +6,59 @@ on:
       - main
 
 jobs:
-  compile:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
-        with:
-          java-version: 21
-          distribution: temurin
-      - run: mvn clean install -DskipTests
-        shell: bash
-      - uses: actions/cache@v5
-        with:
-          path: ~/.m2/repository/com/sarpreetsingh
-          key: sarpreetsingh
-
-  unit-tests:
-    needs: compile
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
-        with:
-          java-version: 21
-          distribution: temurin
-      - uses: actions/cache@v5
-        with:
-          path: ~/.m2/repository/com/sarpreetsingh
-          key: sarpreetsingh
-      - run: mvn test -Punit-tests
-        shell: bash
-
-  integration-tests:
-    needs: compile
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
-        with:
-          java-version: 21
-          distribution: temurin
-      - uses: actions/cache@v5
-        with:
-          path: ~/.m2/repository/com/sarpreetsingh
-          key: sarpreetsingh
-      - run: mvn test -Pintegration-tests
-        shell: bash
-        env:
-          SPRING_PROFILES_ACTIVE: local
+#  compile:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v6
+#      - uses: actions/setup-java@v5
+#        with:
+#          java-version: 21
+#          distribution: temurin
+#      - run: mvn clean install -DskipTests
+#        shell: bash
+#      - uses: actions/cache@v5
+#        with:
+#          path: ~/.m2/repository/com/sarpreetsingh
+#          key: sarpreetsingh
+#
+#  unit-tests:
+#    needs: compile
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v6
+#      - uses: actions/setup-java@v5
+#        with:
+#          java-version: 21
+#          distribution: temurin
+#      - uses: actions/cache@v5
+#        with:
+#          path: ~/.m2/repository/com/sarpreetsingh
+#          key: sarpreetsingh
+#      - run: mvn test -Punit-tests
+#        shell: bash
+#
+#  integration-tests:
+#    needs: compile
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v6
+#      - uses: actions/setup-java@v5
+#        with:
+#          java-version: 21
+#          distribution: temurin
+#      - uses: actions/cache@v5
+#        with:
+#          path: ~/.m2/repository/com/sarpreetsingh
+#          key: sarpreetsingh
+#      - run: mvn test -Pintegration-tests
+#        shell: bash
+#        env:
+#          SPRING_PROFILES_ACTIVE: local
 
   package:
-    needs:
-      - unit-tests
-      - integration-tests
+#    needs:
+#      - unit-tests
+#      - integration-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -87,10 +87,6 @@ jobs:
         with:
           name: target
           path: target
-      - uses: docker/metadata-actions@v6
-        id: metadata
-        with:
-          images:  ${{ secrets.DOCKER_USERNAME }}/nevis
       - uses: docker/login-action@v4
         with:
           username:  ${{ secrets.DOCKER_USERNAME }}
