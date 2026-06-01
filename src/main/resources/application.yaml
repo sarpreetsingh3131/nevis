@@ -23,6 +23,10 @@ spring:
   docker:
     compose:
       enabled: false
+  security:
+    user:
+      name: nevis
+      password: nevis
 
 management:
   endpoints:
