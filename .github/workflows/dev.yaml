@@ -83,6 +83,9 @@ jobs:
     needs: package
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v6
+      - uses: docker/setup-qemu-action@v4
+      - uses: docker/setup-buildx-action@v4
       - uses: actions/download-artifact@v8
         with:
           name: target
@@ -91,12 +94,9 @@ jobs:
         with:
           username:  ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - uses: docker/setup-buildx-action@v4
-      - name: build, tag and push the image
-        env:
-          USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        run: |
-          docker buildx build \
-            --platform linux/arm64 \
-            --tag $USERNAME/nevis:latest \
-            --push .
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/nevis:latest
+          platforms: linux/arm64
