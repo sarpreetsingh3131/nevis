@@ -1,0 +1,46 @@
+spring:
+  ai:
+    ollama:
+      base-url: ${OLLAMA_BASE_URL}
+      timeout: 3
+      init:
+        pull-model-strategy: ALWAYS
+      chat:
+        options:
+          model: ${OLLAMA_CHAT_MODEL}
+      embedding:
+        options:
+          model: ${OLLAMA_EMBEDDING_MODEL}
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        dimensions: 768
+        index-type: hnsw
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  docker:
+    compose:
+      enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+logging:
+  level:
+    com:
+      sarpreetsingh:
+        nevis:
+          filter:
+            RequestLoggingFilter: DEBUG
+
+springdoc:
+  api-docs:
+    path: /swagger-ui/api-docs
+    version: OPENAPI_3_1
+  swagger-ui:
+    tryItOutEnabled: true
