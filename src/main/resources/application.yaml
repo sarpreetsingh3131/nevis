@@ -20,13 +20,11 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+    hikari:
+      max-lifetime: 300000 #5m
   docker:
     compose:
       enabled: false
-  security:
-    user:
-      name: nevis
-      password: nevis
 
 management:
   endpoints:
@@ -46,5 +44,6 @@ springdoc:
   api-docs:
     path: /swagger-ui/api-docs
     version: OPENAPI_3_1
+
   swagger-ui:
     tryItOutEnabled: true

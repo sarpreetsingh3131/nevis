@@ -1,18 +1,4 @@
 spring:
-  ai:
-    ollama:
-      base-url: http://172.17.0.1:11434
-      chat:
-        options:
-          model: llama3.2
-      embedding:
-        options:
-          model: nomic-embed-text
-  datasource:
-    url: jdbc:postgresql://172.17.0.1:5432/postgres
-    username: postgres
-    password: postgres
-
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update

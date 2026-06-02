@@ -13,6 +13,49 @@
 1. Start docker engine
 2. Run `mvn test -Pintegration-tests -Dspring.profiles.active=local`
 
+### Deploy app
+1. Build and push docker image 
+```json lines 
+docker buildx build --tag ${YOUR_DOCKER_USERNAME}/nevis:latest --push .
+```
+2. Run docker image
+```json lines
+sudo docker run -d \
+-e SPRING_PROFILES_ACTIVE=deploy \
+-e OLLAMA_BASE_URL=${YOUR_OLLAMA_BASE_URL} \
+-e OLLAMA_CHAT_MODEL=${YOUR_OLLAMA_CHAT_MODEL_NAME} \
+-e OLLAMA_EMBEDDING_MODEL=${YOUR_OLLAMA_EMBEDDING_MODEL_NAME} \
+-e DB_URL=${YOUR_DB_URL} \
+-e DB_USERNAME=${YOUR_DB_USERNAME} \
+-e DB_PASSWORD=${YOUR_DB_PASSWORD} \
+-p 80:8080 ${YOUR_DOCKER_USERNAME}/nevis
+```
+#### Sample deploy using docker images on linux/arm64
+```json lines
+// run ollama image
+sudo docker run -d -p 11434:11434 ollama/ollama:latest
+
+// run postgres image
+sudo docker run -d \
+-e POSTGRES_DB=postgres \
+-e POSTGRES_USER=postgres \
+-e POSTGRES_PASSWORD=postgres \
+-p 5432:5432 pgvector/pgvector:pg17
+
+// run app image
+sudo docker run -d \
+-e SPRING_PROFILES_ACTIVE=deploy \
+-e OLLAMA_BASE_URL=http://172.17.0.1:11434 \
+-e OLLAMA_CHAT_MODEL=llama3.2 \
+-e OLLAMA_EMBEDDING_MODEL=nomic-embed-text \
+-e DB_URL=jdbc:postgresql://172.17.0.1:5432/postgres \
+-e DB_USERNAME=postgres \
+-e DB_PASSWORD=postgres \
+-p 80:8080 sarpreetsingh/nevis
+```
+
+
+
 ## Example requests and responses
 ### Client
 `POST http://localhost:8080/api/v1/clients`

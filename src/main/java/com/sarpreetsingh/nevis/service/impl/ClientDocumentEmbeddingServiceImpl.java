@@ -57,10 +57,10 @@ public class ClientDocumentEmbeddingServiceImpl implements ClientDocumentEmbeddi
                     Object entityClassName = item.getMetadata().get(ENTITY_CLASS_NAME_METADATA_KEY);
                     Optional<Double> score = formatScore(Optional.ofNullable(item.getScore()));
 
-                    if (entityClassName.equals(ClientEntity.class.getName())) {
+                    if (ClientEntity.class.getName().equals(entityClassName)) {
                         clientService.findById(id)
                                 .ifPresent(client -> searchResultWrapper.addClient(score, client));
-                    } else if (entityClassName.equals(DocumentEntity.class.getName())) {
+                    } else if (DocumentEntity.class.getName().equals(entityClassName)) {
                         documentService.findById(id)
                                 .ifPresent(document -> searchResultWrapper.addDocument(score, document));
                     } else {

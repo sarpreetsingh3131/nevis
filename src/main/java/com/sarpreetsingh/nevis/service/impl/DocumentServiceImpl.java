@@ -48,7 +48,7 @@ public class DocumentServiceImpl implements DocumentService {
         return document;
     }
 
-    @Scheduled(fixedDelayString = "PT10S", initialDelayString = "PT10S")
+    @Scheduled(fixedDelayString = "PT5M", initialDelayString = "PT1M")
     private void summariseDocuments() {
         log.info("Auto summarising documents started");
         int currentPage = 0;
@@ -70,7 +70,7 @@ public class DocumentServiceImpl implements DocumentService {
                                     })
                                     .orElse(null);
                         } catch (Exception e) {
-                            log.error("Error while summarising document [id={}]", document.getId(), e);
+                            log.error("Error while summarising document [id={}]", document.getId());
                             return null;
                         }
                     }))

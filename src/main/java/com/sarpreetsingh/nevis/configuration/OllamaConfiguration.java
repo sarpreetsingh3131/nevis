@@ -7,6 +7,8 @@ import org.springframework.ai.ollama.api.OllamaChatOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.retry.RetryPolicy;
+import org.springframework.core.retry.RetryTemplate;
 import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.http.client.reactive.JdkClientHttpConnector;
 import org.springframework.web.client.RestClient;
@@ -52,6 +54,7 @@ public class OllamaConfiguration {
     public ChatClient chatClient(OllamaApi ollamaApi, OllamaChatOptions ollamaChatOptions) {
         return ChatClient.create(OllamaChatModel.builder().ollamaApi(ollamaApi)
                 .defaultOptions(ollamaChatOptions)
+                .retryTemplate(new RetryTemplate(RetryPolicy.builder().maxRetries(1).build()))
                 .build());
     }
 }
