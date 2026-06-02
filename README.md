@@ -16,11 +16,11 @@
 
 ### Deploy app
 1. Build and push docker image 
-```json lines 
+``` 
 docker buildx build --tag ${YOUR_DOCKER_USERNAME}/nevis:latest --push .
 ```
 2. Run docker image
-```json lines
+```
 sudo docker run -d \
 -e SPRING_PROFILES_ACTIVE=deploy \
 -e OLLAMA_BASE_URL=${YOUR_OLLAMA_BASE_URL} \
@@ -32,7 +32,7 @@ sudo docker run -d \
 -p 80:8080 ${YOUR_DOCKER_USERNAME}/nevis
 ```
 #### Sample deploy using docker images on linux/arm64
-```json lines
+```
 // run ollama image
 sudo docker run -d -p 11434:11434 ollama/ollama:latest
 
@@ -54,8 +54,6 @@ sudo docker run -d \
 -e DB_PASSWORD=postgres \
 -p 80:8080 sarpreetsingh/nevis
 ```
-
-
 
 ## Example requests and responses
 ### Client
@@ -180,7 +178,6 @@ sudo docker run -d \
   "createdAt": "2026-06-01T15:02:04.179182Z"
 }
 ```
-io.netty.handler.timeout.ReadTimeoutException
 
 ```json lines
 {
@@ -255,5 +252,3 @@ io.netty.handler.timeout.ReadTimeoutException
     "documents": []
 }
 ```
-
-
