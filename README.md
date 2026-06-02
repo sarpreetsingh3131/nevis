@@ -5,6 +5,7 @@
 1. Start docker engine
 2. Run `mvn spring-boot:run -Dspring-boot.run.profiles=local`
 3. Swagger - http://localhost:8080/swagger-ui/index.html
+4. Credentials: `username=nevis, password=nevis`
 
 ### Run unit tests
 1. Run `mvn test -Punit-tests`
